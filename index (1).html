@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IVAO-Discord-Unterrichtsplanung</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --danger: #f87171;
+      --border: rgba(255,255,255,0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #1e3a8a 0, var(--bg) 38%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 56px 20px 32px;
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.15);
+      color: #bae6fd;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    header p {
+      max-width: 780px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 0 auto 64px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .full { grid-column: span 12; }
+    .half { grid-column: span 6; }
+    .third { grid-column: span 4; }
+
+    h2, h3 {
+      margin-top: 0;
+      line-height: 1.25;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      margin-top: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #06121f;
+      background: var(--accent);
+    }
+
+    button.secondary {
+      background: var(--accent-2);
+      margin-left: 8px;
+    }
+
+    .output {
+      white-space: pre-wrap;
+      background: #020617;
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 16px;
+      min-height: 180px;
+      color: #e2e8f0;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      margin-top: 10px;
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .status.success { color: #86efac; }
+    .status.error { color: var(--danger); }
+
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; }
+
+    .exercise {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 800px) {
+      .half, .third { grid-column: span 12; }
+
+      button.secondary {
+        margin-left: 0;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="pill">IVAO · Discord · Unterrichtsplanung</div>
+    <h1>Didaktik-Kompass</h1>
+    <p>
+      Generiere passende Didaktik-Prompts für IVAO-Training, Discord-Communitys und virtuelle Flugausbildung.
+      Wähle ein Thema, eine Zielgruppe und ein Lernziel. Ergänze optional deinen eigenen Kontext.
+    </p>
+  </header>
+
+  <main class="grid">
+    <section class="card full">
+      <h2>Prompt-Generator</h2>
+
+      <div class="grid">
+        <div class="third">
+          <label for="bereich">Bereich</label>
+          <select id="bereich">
+            <option>IVAO Pilotentraining</option>
+            <option>IVAO ATC-Training</option>
+            <option>Discord Community Management</option>
+            <option>Discord Lernserver</option>
+            <option>Events und Gruppenflüge</option>
+            <option>VFR-Grundlagen</option>
+            <option>IFR-Verfahren</option>
+            <option>Phraseologie-Training</option>
+            <option>Flugvorbereitung im MSFS</option>
+            <option>Notfallverfahren</option>
+            <option>Mentoring für Jugendliche</option>
+            <option>Discord Moderation</option>
+            <option>Community Events</option>
+            <option>Gruppenflug Organisation</option>
+            <option>Einführung in Online-Netzwerke</option>
+          </select>
+        </div>
+
+        <div class="third">
+          <label for="zielgruppe">Zielgruppe</label>
+          <select id="zielgruppe">
+            <option>Anfänger ohne Vorwissen</option>
+            <option>Einsteiger mit Grundkenntnissen</option>
+            <option>Fortgeschrittene Piloten</option>
+            <option>Angehende Lotsen</option>
+            <option>Kinder und Jugendliche</option>
+            <option>Streamer und Content Creator</option>
+            <option>Flight-Sim Communitys</option>
+            <option>IVAO Neueinsteiger</option>
+            <option>ATC-Schüler</option>
+            <option>Mentoren und Trainer</option>
+            <option>Schulklassen oder Jugendgruppen</option>
+            <option>Erfahrene Discord Moderatoren</option>
+          </select>
+        </div>
+
+        <div class="third">
+          <label for="ziel">Lernziel</label>
+          <select id="ziel">
+            <option>Sicheres Verhalten im Netzwerk</option>
+            <option>Funkkommunikation verbessern</option>
+            <option>Abläufe verständlich erklären</option>
+            <option>Fehler erkennen und reflektieren</option>
+            <option>Community-Regeln vermitteln</option>
+            <option>Sicheres Taxiing trainieren</option>
+            <option>Saubere IFR-Abläufe lernen</option>
+            <option>Stressfreie Kommunikation fördern</option>
+            <option>Selbstständiges Lernen unterstützen</option>
+            <option>Teamarbeit im Gruppenflug verbessern</option>
+            <option>Konflikte im Discord lösen</option>
+            <option>Jugendgerechte Wissensvermittlung</option>
+            <option>Motivation und Aktivität steigern</option>
+            <option>Realistische Trainingsszenarien entwickeln</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="kontext" style="margin-top:18px;">Eigener Kontext optional</label>
+      <textarea id="kontext" placeholder="Beispiel: Wir planen einen Gruppenflug auf IVAO mit Jugendlichen. Thema: korrekte Phraseologie beim Rollen, Start und Anflug."></textarea>
+
+      <button type="button" id="generateButton">Prompt generieren</button>
+      <button type="button" class="secondary" id="copyButton">Prompt kopieren</button>
+      <div id="copyStatus" class="status" aria-live="polite"></div>
+    </section>
+
+    <section class="card half">
+      <h2>Generierter Prompt</h2>
+      <div id="output" class="output">Wähle deine Optionen und klicke auf „Prompt generieren“.</div>
+    </section>
+
+    <section class="card half">
+      <h2>Didaktische Leitprinzipien</h2>
+      <ul>
+        <li><strong>Vom Einfachen zum Komplexen:</strong> Erst Grundbegriffe, dann reale Netzwerksituationen.</li>
+        <li><strong>Handlungsorientierung:</strong> Lernen durch konkrete Szenarien statt nur Theorie.</li>
+        <li><strong>Fehlerfreundlichkeit:</strong> Fehler werden besprochen, nicht bloß bewertet.</li>
+        <li><strong>Klare Rollen:</strong> Pilot, ATC, Mentor und Beobachter bekommen eindeutige Aufgaben.</li>
+        <li><strong>Kurze Feedbackschleifen:</strong> Direkt nach Übungen kurz reflektieren: Was lief gut? Was wird verbessert?</li>
+      </ul>
+    </section>
+
+    <section class="card third">
+      <h3>Übung 1: Funk kurz erklären</h3>
+      <p>Erkläre einem Anfänger in drei Sätzen, warum standardisierte Phraseologie auf IVAO wichtig ist.</p>
+      <div class="exercise">Ziel: Klarheit, Sicherheit und weniger Missverständnisse.</div>
+    </section>
+
+    <section class="card third">
+      <h3>Übung 2: Discord-Regel übersetzen</h3>
+      <p>Formuliere eine Serverregel so um, dass sie freundlich, klar und für Jugendliche verständlich ist.</p>
+      <div class="exercise">Ziel: Regeln nicht nur aufstellen, sondern nachvollziehbar machen.</div>
+    </section>
+
+    <section class="card third">
+      <h3>Übung 3: Debriefing</h3>
+      <p>Nach einem Gruppenflug: Sammle drei Beobachtungen und leite daraus zwei konkrete Lernpunkte ab.</p>
+      <div class="exercise">Ziel: Aus Erfahrung systematisch lernen.</div>
+    </section>
+
+    <section class="card full">
+      <h2>Beispiel-Prompts</h2>
+      <p><strong>IVAO:</strong> „Erstelle eine 30-minütige Unterrichtseinheit für Anfänger zur Funkkommunikation beim VFR-Abflug auf IVAO. Nutze einfache Sprache, ein praktisches Szenario und eine kurze Reflexion am Ende.“</p>
+      <p><strong>Discord:</strong> „Entwickle ein Onboarding-Konzept für neue Mitglieder eines Discord-Lernservers zum Thema Flugsimulation. Berücksichtige klare Regeln, freundliche Begrüßung und eine erste kleine Aufgabe.“</p>
+      <p><strong>Jugendliche:</strong> „Plane eine motivierende Übung für Jugendliche, bei der sie im MSFS einen einfachen Flug vorbereiten und dabei IVAO-Grundregeln kennenlernen.“</p>
+    </section>
+  </main>
+
+  <footer>
+    Didaktik-Kompass für virtuelle Flugausbildung, IVAO-Training und Discord-Communitys
+  </footer>
+
+  <script>
+    function getValue(id) {
+      return document.getElementById(id).value;
+    }
+
+    function buildPrompt(bereich, zielgruppe, ziel, kontext) {
+      return 'Du bist ein erfahrener Didaktik-Coach für virtuelle Flugausbildung, IVAO und Discord-Communitys.\n\n' +
+        'Erstelle eine praxisnahe Unterrichtsplanung für folgenden Bereich:\n' +
+        bereich + '\n\n' +
+        'Zielgruppe:\n' +
+        zielgruppe + '\n\n' +
+        'Lernziel:\n' +
+        ziel + '\n\n' +
+        'Kontext:\n' +
+        (kontext || 'Kein zusätzlicher Kontext angegeben.') + '\n\n' +
+        'Bitte liefere:\n' +
+        '1. Eine kurze Lernzielbeschreibung in einfacher Sprache\n' +
+        '2. Drei didaktische Leitprinzipien für diese Situation\n' +
+        '3. Einen Ablaufplan für 30 bis 45 Minuten\n' +
+        '4. Eine praktische Übung mit Rollenverteilung\n' +
+        '5. Typische Fehler und wie man sie freundlich korrigiert\n' +
+        '6. Eine kurze Reflexionsfrage für das Debriefing\n' +
+        '7. Einen Discord-Beitrag, mit dem die Teilnehmenden eingeladen oder vorbereitet werden können\n\n' +
+        'Achte auf klare Sprache, realistische IVAO-/Discord-Situationen und einen motivierenden Ton.';
+    }
+
+    function setStatus(message, type) {
+      var status = document.getElementById('copyStatus');
+      status.textContent = message || '';
+      status.className = type ? 'status ' + type : 'status';
+    }
+
+    function generatePrompt() {
+      var bereich = getValue('bereich');
+      var zielgruppe = getValue('zielgruppe');
+      var ziel = getValue('ziel');
+      var kontext = getValue('kontext').trim();
+
+      document.getElementById('output').textContent = buildPrompt(bereich, zielgruppe, ziel, kontext);
+      setStatus('', '');
+    }
+
+    function selectPromptText() {
+      var output = document.getElementById('output');
+      var range = document.createRange();
+      var selection = window.getSelection();
+      range.selectNodeContents(output);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    function legacyCopyText(text) {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', 'readonly');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      var success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (error) {
+        success = false;
+      }
+
+      document.body.removeChild(textarea);
+      return success;
+    }
+
+    function copyPrompt() {
+      var text = document.getElementById('output').textContent;
+
+      if (!text || text.indexOf('Wähle deine Optionen') !== -1) {
+        setStatus('Bitte zuerst einen Prompt generieren.', 'error');
+        return;
+      }
+
+      var copied = legacyCopyText(text);
+
+      if (copied) {
+        setStatus('Prompt wurde kopiert.', 'success');
+      } else {
+        selectPromptText();
+        setStatus('Automatisches Kopieren ist blockiert. Der Prompt wurde markiert. Bitte Strg+C drücken.', 'error');
+      }
+    }
+
+    function runTests() {
+      console.assert(
+        buildPrompt('IVAO Pilotentraining', 'Anfänger ohne Vorwissen', 'Funkkommunikation verbessern', '').indexOf('Kein zusätzlicher Kontext angegeben.') !== -1,
+        'Test 1 fehlgeschlagen: leerer Kontext wird nicht korrekt ersetzt.'
+      );
+
+      console.assert(
+        buildPrompt('Discord Moderation', 'Kinder und Jugendliche', 'Konflikte im Discord lösen', 'Test-Kontext').indexOf('Test-Kontext') !== -1,
+        'Test 2 fehlgeschlagen: eigener Kontext fehlt im Prompt.'
+      );
+
+      console.assert(
+        typeof legacyCopyText === 'function',
+        'Test 3 fehlgeschlagen: Kopier-Fallback fehlt.'
+      );
+
+      console.info('Didaktik-Kompass Tests abgeschlossen.');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('generateButton').addEventListener('click', generatePrompt);
+      document.getElementById('copyButton').addEventListener('click', copyPrompt);
+      runTests();
+    });
+  </script>
+</body>
+</html>
